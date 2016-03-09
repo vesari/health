@@ -20,7 +20,7 @@ func Test_Handler_ServeHTTP_Down(t *testing.T) {
 	jsonbytes, _ := ioutil.ReadAll(w.Body)
 	jsonstring := strings.TrimSpace(string(jsonbytes))
 
-	wants := `{"status":"down","info":{"DownChecker":{"status":"down","info":"Down"}}}`
+	wants := `{"status":"down","info":{"DownChecker":{"status":"down","info":"down"}}}`
 
 	if jsonstring != wants {
 		t.Errorf("jsonReturned == %s, wants %s", jsonstring, wants)
@@ -49,7 +49,7 @@ func Test_Handler_ServeHTTP_Up(t *testing.T) {
 	jsonbytes, _ := ioutil.ReadAll(w.Body)
 	jsonstring := strings.TrimSpace(string(jsonbytes))
 
-	wants := `{"status":"up","info":{"UpChecker":{"status":"up","info":"Up"}}}`
+	wants := `{"status":"up","info":{"UpChecker":{"status":"up","info":"up"}}}`
 
 	if jsonstring != wants {
 		t.Errorf("jsonReturned == %s, wants %s", jsonstring, wants)

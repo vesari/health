@@ -36,7 +36,7 @@ func (c CompositeChecker) Check() Health {
 	for _, item := range c.checkers {
 		h := item.checker.Check()
 
-		if !health.IsDown() && h.IsDown() {
+		if !h.IsUp() && !health.IsDown() {
 			health.Down()
 		}
 

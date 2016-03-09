@@ -2,12 +2,22 @@ package health
 
 import "testing"
 
+type outOfServiceTestChecker struct{}
+
+func (c outOfServiceTestChecker) Check() Health {
+	health := NewHealth()
+	health.OutOfService()
+	health.Info = OutOfService
+
+	return health
+}
+
 type upTestChecker struct{}
 
 func (c upTestChecker) Check() Health {
 	health := NewHealth()
 	health.Up()
-	health.Info = "Up"
+	health.Info = Up
 
 	return health
 }
@@ -17,7 +27,7 @@ type downTestChecker struct{}
 func (c downTestChecker) Check() Health {
 	health := NewHealth()
 	health.Down()
-	health.Info = "Down"
+	health.Info = Down
 
 	return health
 }
@@ -50,6 +60,17 @@ func Test_CompositeChecker_Check_Up(t *testing.T) {
 func Test_CompositeChecker_Check_Down(t *testing.T) {
 	c := NewCompositeChecker()
 	c.AddChecker("downTestChecker", downTestChecker{})
+
+	health := c.Check()
+
+	if !health.IsDown() {
+		t.Errorf("health.IsDown() == %t, wants %t", health.IsDown(), true)
+	}
+}
+
+func Test_CompositeChecker_Check_OutOfService(t *testing.T) {
+	c := NewCompositeChecker()
+	c.AddChecker("outOfServiceTestChecker", outOfServiceTestChecker{})
 
 	health := c.Check()
 
