@@ -5,21 +5,24 @@ type Checker interface {
 	Check() Health
 }
 
+type checkerItem struct {
+	name    string
+	checker Checker
+}
+
 // CompositeChecker aggregate a list of Checkers
 type CompositeChecker struct {
-	checkers map[string]Checker
+	checkers []checkerItem
 }
 
 // NewCompositeChecker creates a new CompositeChecker
 func NewCompositeChecker() CompositeChecker {
-	return CompositeChecker{
-		checkers: map[string]Checker{},
-	}
+	return CompositeChecker{}
 }
 
 // AddChecker add a Checker to the aggregator
 func (c *CompositeChecker) AddChecker(name string, checker Checker) {
-	c.checkers[name] = checker
+	c.checkers = append(c.checkers, checkerItem{name: name, checker: checker})
 }
 
 // Check returns the combination of all checkers added
@@ -30,14 +33,14 @@ func (c CompositeChecker) Check() Health {
 
 	healths := map[string]Health{}
 
-	for name, check := range c.checkers {
-		h := check.Check()
+	for _, item := range c.checkers {
+		h := item.checker.Check()
 
 		if !health.IsDown() && h.IsDown() {
 			health.Down()
 		}
 
-		healths[name] = h
+		healths[item.name] = h
 	}
 
 	health.Info = healths

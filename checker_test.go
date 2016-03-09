@@ -22,14 +22,6 @@ func (c downTestChecker) Check() Health {
 	return health
 }
 
-func Test_NewCompositeChecker(t *testing.T) {
-	c := NewCompositeChecker()
-
-	if c.checkers == nil {
-		t.Error("c.checkers == nil, wants !nil")
-	}
-}
-
 func Test_CompositeChecker_AddChecker(t *testing.T) {
 	c := NewCompositeChecker()
 
