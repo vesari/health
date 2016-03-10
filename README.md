@@ -5,6 +5,33 @@
 
 A Easy to use, extensible health check library
 
+# Example
+
+```go
+package main
+
+import (
+    "net/http"
+
+    "github.com/dimiro1/health"
+    "github.com/dimiro1/health/url"
+)
+
+func main() {
+    companies := health.NewCompositeChecker()
+    companies.AddChecker("Microsoft", url.NewChecker("https://www.microsoft.com/"))
+    companies.AddChecker("Oracle", url.NewChecker("https://www.oracle.com/"))
+    companies.AddChecker("Google", url.NewChecker("https://www.google.com/"))
+
+    handler := health.NewHandler()
+    handler.AddChecker("Go", url.NewChecker("https://golang.org/"))
+    handler.AddChecker("Big Companies", companies)
+
+    http.Handle("/health/", handler)
+    http.ListenAndServe(":8080", nil)
+}
+```
+
 # LICENSE
 
 The MIT License (MIT)
