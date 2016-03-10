@@ -8,6 +8,17 @@ import (
 	"testing"
 )
 
+func Test_NewHandler(t *testing.T) {
+	// How can I test a function that returns a Struct ?
+	// A better Idea? Please tell me!
+	h := NewHandler()
+	handler := &h
+
+	if handler == nil {
+		t.Error("&NewHandler() == nil, wants !nil")
+	}
+}
+
 func Test_Handler_ServeHTTP_Down(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 	w := httptest.NewRecorder()
@@ -52,7 +63,7 @@ func Test_Handler_ServeHTTP_Up(t *testing.T) {
 	wants := `{"status":"up","info":{"UpChecker":{"status":"up","info":"up"}}}`
 
 	if jsonstring != wants {
-		t.Errorf("jsonReturned == %s, wants %s", jsonstring, wants)
+		t.Errorf("jsonstring == %s, wants %s", jsonstring, wants)
 	}
 
 	contentType := w.Header().Get("Content-Type")
