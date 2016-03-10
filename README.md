@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dimiro1/health.svg?branch=master)](https://travis-ci.org/dimiro1/health)
+
 # Go Health Check
 
 A Easy to use, extensible health check library
