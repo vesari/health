@@ -32,6 +32,49 @@ func main() {
 }
 ```
 
+```sh
+$ curl localhost:8080/health/
+```
+
+If everything is ok the server must return the following json.
+
+```json
+{
+    "status": "up",
+    "info": {
+        "Big Companies": {
+            "status": "up",
+            "info": {
+                "Google": {
+                    "status": "up",
+                    "info": {
+                        "status": 200
+                    }
+                },
+                "Microsoft": {
+                    "status": "up",
+                    "info": {
+                        "status": 200
+                    }
+                },
+                "Oracle": {
+                    "status": "up",
+                    "info": {
+                        "status": 200
+                    }
+                }
+            }
+        },
+        "Go": {
+            "status": "up",
+            "info": {
+                "status": 200
+            }
+        }
+    }
+}
+```
+
 # LICENSE
 
 The MIT License (MIT)
