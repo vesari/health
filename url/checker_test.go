@@ -28,7 +28,7 @@ func Test_Checker_Check_Up(t *testing.T) {
 
 	resp, _ := http.Get(fmt.Sprintf("%s/health/", server.URL))
 
-	wants := `{"status":"up","info":{"Up":{"status":"up","info":{"status":200}}}}`
+	wants := `{"Up":{"code":200,"status":"UP"},"status":"UP"}`
 
 	check(t, resp, wants, http.StatusOK)
 }
@@ -51,7 +51,7 @@ func Test_Checker_Check_Down(t *testing.T) {
 
 	resp, _ := http.Get(fmt.Sprintf("%s/health/", server.URL))
 
-	wants := `{"status":"down","info":{"Down":{"status":"down","info":{"status":500}}}}`
+	wants := `{"Down":{"code":500,"status":"DOWN"},"status":"DOWN"}`
 
 	check(t, resp, wants, http.StatusServiceUnavailable)
 }
@@ -70,7 +70,7 @@ func Test_Checker_Check_Down_invalid(t *testing.T) {
 
 	resp, _ := http.Get(fmt.Sprintf("%s/health/", server.URL))
 
-	wants := `{"status":"down","info":{"Down":{"status":"down","info":{"status":400}}}}`
+	wants := `{"Down":{"code":400,"status":"DOWN"},"status":"DOWN"}`
 	check(t, resp, wants, http.StatusServiceUnavailable)
 }
 

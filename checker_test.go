@@ -7,7 +7,6 @@ type outOfServiceTestChecker struct{}
 func (c outOfServiceTestChecker) Check() Health {
 	health := NewHealth()
 	health.OutOfService()
-	health.Info = OutOfService
 
 	return health
 }
@@ -17,7 +16,6 @@ type upTestChecker struct{}
 func (c upTestChecker) Check() Health {
 	health := NewHealth()
 	health.Up()
-	health.Info = Up
 
 	return health
 }
@@ -27,7 +25,6 @@ type downTestChecker struct{}
 func (c downTestChecker) Check() Health {
 	health := NewHealth()
 	health.Down()
-	health.Info = Down
 
 	return health
 }

@@ -40,38 +40,26 @@ If everything is ok the server must return the following json.
 
 ```json
 {
-    "status": "up",
-    "info": {
-        "Big Companies": {
-            "status": "up",
-            "info": {
-                "Google": {
-                    "status": "up",
-                    "info": {
-                        "status": 200
-                    }
-                },
-                "Microsoft": {
-                    "status": "up",
-                    "info": {
-                        "status": 200
-                    }
-                },
-                "Oracle": {
-                    "status": "up",
-                    "info": {
-                        "status": 200
-                    }
-                }
-            }
+    "Big Companies": {
+        "Google": {
+            "code": 200,
+            "status": "UP"
         },
-        "Go": {
-            "status": "up",
-            "info": {
-                "status": 200
-            }
-        }
-    }
+        "Microsoft": {
+            "code": 200,
+            "status": "UP"
+        },
+        "Oracle": {
+            "code": 200,
+            "status": "UP"
+        },
+        "status": "UP"
+    },
+    "Go": {
+        "code": 200,
+        "status": "UP"
+    },
+    "status": "UP"
 }
 ```
 

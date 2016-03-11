@@ -6,10 +6,6 @@ import (
 	"github.com/dimiro1/health"
 )
 
-type response struct {
-	Status int `json:"status"`
-}
-
 // Checker is a checker that check a givem URL
 type Checker struct {
 	URL string
@@ -37,7 +33,9 @@ func (u Checker) Check() health.Health {
 
 	if err != nil {
 		health.Down()
-		health.Info = response{Status: http.StatusBadRequest}
+		health.Info = map[string]interface{}{
+			"code": http.StatusBadRequest,
+		}
 
 		return health
 	}
@@ -46,8 +44,8 @@ func (u Checker) Check() health.Health {
 		health.Down()
 	}
 
-	health.Info = response{
-		Status: resp.StatusCode,
+	health.Info = map[string]interface{}{
+		"code": resp.StatusCode,
 	}
 
 	return health

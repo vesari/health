@@ -1,28 +1,44 @@
 package health
 
+import "encoding/json"
+
 const (
 	// Up Convenient constant value representing up state.
-	Up = "up"
+	Up = "UP"
 
 	// Down Convenient constant value representing down state.
-	Down = "down"
+	Down = "DOWN"
 
 	// OutOfService Convenient constant value representing out-of-service state.
-	OutOfService = "outOfService"
+	OutOfService = "OUT_OF_SERVICE"
 
 	// Unknown Convenient constant value representing unknown state.
-	Unknown = "unknown"
+	Unknown = "UNKNOWN"
 )
 
 // Health is a health status struct
 type Health struct {
-	Status string      `json:"status"`
-	Info   interface{} `json:"info,omitempty"`
+	Status string
+	Info   map[string]interface{}
+}
+
+// MarshalJSON is a custom JSON marshaller
+func (h Health) MarshalJSON() ([]byte, error) {
+	data := map[string]interface{}{}
+	data["status"] = h.Status
+
+	for k, v := range h.Info {
+		data[k] = v
+	}
+
+	return json.Marshal(data)
 }
 
 // NewHealth return a new Health with status Down
 func NewHealth() Health {
-	h := Health{}
+	h := Health{
+		Info: make(map[string]interface{}),
+	}
 	h.Down()
 
 	return h

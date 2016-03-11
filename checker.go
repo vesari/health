@@ -31,7 +31,7 @@ func (c CompositeChecker) Check() Health {
 	health := NewHealth()
 	health.Up()
 
-	healths := map[string]Health{}
+	healths := make(map[string]interface{})
 
 	for _, item := range c.checkers {
 		h := item.checker.Check()
