@@ -108,7 +108,7 @@ $ go get github.com/dimiro1/health
 
 # API
 
-The API is stable and I do not have any plans to break compatibility, but I recommend you to vendor this depenency in your project, as it is a good practice.
+The API is stable and I do not have any plans to break compatibility, but I recommend you to vendor this dependency in your project, as it is a good practice.
 
 # Testing
 
