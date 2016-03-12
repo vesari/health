@@ -27,12 +27,17 @@ Package health is a easy to use, extensible health check library.
 
     import (
         "net/http"
+        "database/sql"
 
         "github.com/dimiro1/health"
         "github.com/dimiro1/health/url"
+        _ "github.com/go-sql-driver/mysql"
     )
 
     func main() {
+        database, _ := sql.Open("mysql", "/")
+        mysql := db.NewMySQLChecker(database)
+
         companies := health.NewCompositeChecker()
         companies.AddChecker("Microsoft", url.NewChecker("https://www.microsoft.com/"))
         companies.AddChecker("Oracle", url.NewChecker("https://www.oracle.com/"))
@@ -41,6 +46,7 @@ Package health is a easy to use, extensible health check library.
         handler := health.NewHandler()
         handler.AddChecker("Go", url.NewChecker("https://golang.org/"))
         handler.AddChecker("Big Companies", companies)
+        handler.AddChecker("MySQL", mysql)
 
         http.Handle("/health/", handler)
         http.ListenAndServe(":8080", nil)
