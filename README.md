@@ -63,6 +63,18 @@ If everything is ok the server must return the following json.
 }
 ```
 
+# Testing
+
+```sh
+$ go get gopkg.in/DATA-DOG/go-sqlmock.v1
+```
+
+or 
+
+```sh
+go get -t github.com/dimiro1/health
+```
+
 # LICENSE
 
 The MIT License (MIT)

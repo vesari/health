@@ -6,12 +6,12 @@ import (
 	"github.com/dimiro1/health"
 )
 
-// Checker is a checker that check a givem URL
+// Checker is a checker that check a given URL
 type Checker struct {
 	URL string
 }
 
-// NewChecker returns a new URLChecker with the given URL
+// NewChecker returns a new url.Checker with the given URL
 func NewChecker(url string) Checker {
 	return Checker{URL: url}
 }
