@@ -17,6 +17,7 @@ A Easy to use, extensible health check library
 - [API](#api)
 - [Testing](#testing)
 - [Implementing custom checkers](#implementing-custom-checkers)
+- [Implemented health check indicators](#implemented-health-check-indicators)
 - [LICENSE](#license)
 
 # Example
@@ -187,6 +188,15 @@ func (d DiskSpaceChecker) Check() health.Health {
 	return health
 }
 ```
+
+# Implemented health check indicators
+
+| Health      | Description                            | Package                                           |
+|-------------|----------------------------------------|---------------------------------------------------|
+| url.Checker | Check the connection with some URL     | https://github.com/dimiro1/health/tree/master/url |
+|-------------|----------------------------------------|---------------------------------------------------|
+| db.Checker  | Check the connection with the database | https://github.com/dimiro1/health/tree/master/db  |
+|             |                                        |                                                   |
 
 # LICENSE
 
