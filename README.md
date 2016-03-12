@@ -12,12 +12,17 @@ package main
 
 import (
     "net/http"
+    "database/sql"
 
     "github.com/dimiro1/health"
     "github.com/dimiro1/health/url"
+    _ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
+    database, _ := sql.Open("mysql", "/")
+	mysql := db.NewMySQLChecker(database)
+    
     companies := health.NewCompositeChecker()
     companies.AddChecker("Microsoft", url.NewChecker("https://www.microsoft.com/"))
     companies.AddChecker("Oracle", url.NewChecker("https://www.oracle.com/"))
@@ -26,6 +31,7 @@ func main() {
     handler := health.NewHandler()
     handler.AddChecker("Go", url.NewChecker("https://golang.org/"))
     handler.AddChecker("Big Companies", companies)
+    handler.AddChecker("MySQL", mysql)
 
     http.Handle("/health/", handler)
     http.ListenAndServe(":8080", nil)
@@ -58,6 +64,10 @@ If everything is ok the server must return the following json.
     "Go": {
         "code": 200,
         "status": "UP"
+    },
+    "MySQL": {
+        "status": "UP",
+        "version": "10.1.9-MariaDB"
     },
     "status": "UP"
 }
