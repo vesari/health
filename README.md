@@ -194,9 +194,7 @@ func (d DiskSpaceChecker) Check() health.Health {
 | Health      | Description                            | Package                                           |
 |-------------|----------------------------------------|---------------------------------------------------|
 | url.Checker | Check the connection with some URL     | https://github.com/dimiro1/health/tree/master/url |
-|-------------|----------------------------------------|---------------------------------------------------|
 | db.Checker  | Check the connection with the database | https://github.com/dimiro1/health/tree/master/db  |
-|             |                                        |                                                   |
 
 # LICENSE
 
