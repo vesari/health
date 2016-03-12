@@ -2,29 +2,14 @@ package health
 
 import "encoding/json"
 
-type healthStatus int
+type healthStatus string
 
 const (
-	UP healthStatus = iota
-	DOWN
-	OUT_OF_SERVICE
-	UNKNOWN
+	up           healthStatus = "UP"
+	down                      = "DOWN"
+	outOfService              = "OUT OF SERVICE"
+	unknown                   = "UNKNOWN"
 )
-
-func (h healthStatus) String() string {
-	switch h {
-	case UP:
-		return "UP"
-	case DOWN:
-		return "DOWN"
-	case OUT_OF_SERVICE:
-		return "OUT_OF_SERVICE"
-	case UNKNOWN:
-		return "UNKNOWN"
-	}
-
-	return "NOT RECOGNIZED"
-}
 
 // Health is a health status struct
 type Health struct {
@@ -35,7 +20,7 @@ type Health struct {
 // MarshalJSON is a custom JSON marshaller
 func (h Health) MarshalJSON() ([]byte, error) {
 	data := map[string]interface{}{}
-	data["status"] = h.status.String()
+	data["status"] = h.status
 
 	for k, v := range h.Info {
 		data[k] = v
@@ -56,40 +41,40 @@ func NewHealth() Health {
 
 // IsUnknown returns true if Status is Unknown
 func (h Health) IsUnknown() bool {
-	return h.status == UNKNOWN
+	return h.status == unknown
 }
 
 // IsUp returns true if Status is Up
 func (h Health) IsUp() bool {
-	return h.status == UP
+	return h.status == up
 }
 
 // IsDown returns true if Status is Down
 func (h Health) IsDown() bool {
-	return h.status == DOWN
+	return h.status == down
 }
 
 // IsOutOfService returns true if Status is IsOutOfService
 func (h Health) IsOutOfService() bool {
-	return h.status == OUT_OF_SERVICE
+	return h.status == outOfService
 }
 
 // Down set the status to Down
 func (h *Health) Down() {
-	h.status = DOWN
+	h.status = down
 }
 
 // OutOfService set the status to OutOfService
 func (h *Health) OutOfService() {
-	h.status = OUT_OF_SERVICE
+	h.status = outOfService
 }
 
 // Unknown set the status to Unknown
 func (h *Health) Unknown() {
-	h.status = UNKNOWN
+	h.status = unknown
 }
 
 // Up set the status to Up
 func (h *Health) Up() {
-	h.status = UP
+	h.status = up
 }
