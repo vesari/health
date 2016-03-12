@@ -73,6 +73,69 @@ If everything is ok the server must return the following json.
 }
 ```
 
+# Implementing custom checkers
+
+The key interface is health.Checker, you only have to implement a type that satisfies that interface.
+
+```go
+type Checker interface {
+	Check() Health
+}
+```
+
+Here an example of Disk Space usage (unix only).
+
+```go
+package main
+
+import (
+    "syscall"
+    "os"
+)
+
+type DiskSpaceChecker struct {
+	Dir       string
+	Threshold uint64
+}
+
+func NewDiskSpaceChecker(dir string, threshold uint64) DiskSpaceChecker {
+	return DiskSpaceChecker{Dir: dir, Threshold: threshold}
+}
+
+func (d DiskSpaceChecker) Check() health.Health {
+	health := health.NewHealth()
+	health.Up() // Default is Down
+
+	var stat syscall.Statfs_t
+
+	wd, err := os.Getwd()
+
+	if err != nil {
+		health.Down()
+		health.Info = map[string]interface{}{
+			"error": err.Error(),
+		}
+        
+        return health
+	}
+
+	syscall.Statfs(wd, &stat)
+
+	diskFreeInBytes := stat.Bavail * uint64(stat.Bsize)
+
+	if diskFreeInBytes < d.Threshold {
+		health.Down()
+	}
+
+	health.Info = map[string]interface{}{
+		"free":      diskFreeInBytes,
+		"threshold": d.Threshold,
+	}
+
+	return health
+}
+```
+
 # Testing
 
 ```sh
