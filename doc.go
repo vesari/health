@@ -23,6 +23,8 @@
 /*
 Package health is a easy to use, extensible health check library.
 
+Example
+
     package main
 
     import (
@@ -31,6 +33,7 @@ Package health is a easy to use, extensible health check library.
 
         "github.com/dimiro1/health"
         "github.com/dimiro1/health/url"
+        "github.com/dimiro1/health/db"
         _ "github.com/go-sql-driver/mysql"
     )
 
@@ -50,6 +53,131 @@ Package health is a easy to use, extensible health check library.
 
         http.Handle("/health/", handler)
         http.ListenAndServe(":8080", nil)
+    }
+
+Executing a curl
+
+    $ curl localhost:8080/health/
+
+If everything is ok the server must return the following json.
+
+    {
+        "Big Companies": {
+            "Google": {
+                "code": 200,
+                "status": "UP"
+            },
+            "Microsoft": {
+                "code": 200,
+                "status": "UP"
+            },
+            "Oracle": {
+                "code": 200,
+                "status": "UP"
+            },
+            "status": "UP"
+        },
+        "Go": {
+            "code": 200,
+            "status": "UP"
+        },
+        "MySQL": {
+            "status": "UP",
+            "version": "10.1.9-MariaDB"
+        },
+        "status": "UP"
+    }
+
+
+Motivation
+
+It is very important to verify the status of your system, not only the system itself, but all its dependencies,
+If your system is not Up you can easily know what is the cause of the problem only looking the health check.
+
+Also it serves as a kind of basic itegration test between the systems.
+
+Inspiration
+
+I took a lot of ideas from the spring framework (http://spring.io/).
+
+Instalation
+
+This package is a go getable packake.
+
+    $ go get github.com/dimiro1/health
+
+API
+
+The API is stable and I do not have any plans to break compatibility, but I recommend you to vendor this dependency in your project, as it is a good practice.
+
+Testing
+
+You have to install the test dependencies.
+
+
+    $ go get gopkg.in/DATA-DOG/go-sqlmock.v1
+
+or you can go get this package with the -t flag
+
+    $ go get -t github.com/dimiro1/health
+
+Implementing custom checkers
+
+The key interface is health.Checker, you only have to implement a type that satisfies that interface.
+
+    type Checker interface {
+        Check() Health
+    }
+
+Here an example of Disk Space usage (unix only).
+
+    package main
+
+    import (
+        "syscall"
+        "os"
+    )
+
+    type DiskSpaceChecker struct {
+        Dir       string
+        Threshold uint64
+    }
+
+    func NewDiskSpaceChecker(dir string, threshold uint64) DiskSpaceChecker {
+        return DiskSpaceChecker{Dir: dir, Threshold: threshold}
+    }
+
+    func (d DiskSpaceChecker) Check() health.Health {
+        health := health.NewHealth()
+        health.Up() // Default is Down
+
+        var stat syscall.Statfs_t
+
+        wd, err := os.Getwd()
+
+        if err != nil {
+            health.Down()
+            health.Info = map[string]interface{}{
+                "error": err.Error(), // Why the check is Down
+            }
+
+            return health
+        }
+
+        syscall.Statfs(wd, &stat)
+
+        diskFreeInBytes := stat.Bavail * uint64(stat.Bsize)
+
+        if diskFreeInBytes < d.Threshold {
+            health.Down()
+        }
+
+        health.Info = map[string]interface{}{
+            "free":      diskFreeInBytes,
+            "threshold": d.Threshold,
+        }
+
+        return health
     }
 */
 package health
