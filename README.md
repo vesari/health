@@ -1,9 +1,22 @@
 [![Build Status](https://travis-ci.org/dimiro1/health.svg?branch=master)](https://travis-ci.org/dimiro1/health)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dimiro1/health)](https://goreportcard.com/report/github.com/dimiro1/health)
+[![GoDoc](https://godoc.org/github.com/dimiro1/health?status.svg)](https://godoc.org/github.com/dimiro1/health)
+
 
 # Go Health Check
 
 A Easy to use, extensible health check library
+
+**Table of Contents**
+
+- [Example](#example)
+- [Motivation](#motivation)
+- [Inspiration](#inspiration)
+- [Instalation](#instalation)
+- [API](#api)
+- [Testing](#testing)
+- [Implementing custom checkers](#implementing-custom-checkers)
+- [LICENSE](#license)
 
 # Example
 
@@ -16,6 +29,7 @@ import (
 
     "github.com/dimiro1/health"
     "github.com/dimiro1/health/url"
+    "github.com/dimiro1/health/db"
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -73,6 +87,43 @@ If everything is ok the server must return the following json.
 }
 ```
 
+# Motivation
+
+It is very important to verify the status of your system, not only the system itself, but all its dependencies, 
+If your system is not Up you can easily know what is the cause of the problem only looking the health check.
+
+Also it serves as a kind of basic itegration test between the systems.
+
+# Inspiration
+
+I took a lot of ideas from the [spring framework](http://spring.io/).
+
+# Instalation
+
+This package is a go getable packake.
+
+```sh
+$ go get github.com/dimiro1/health
+```
+
+# API
+
+The API is stable and I do not have any plans to break compatibility, but I recommend you to vendor this depenency in your project, as it is a good practice.
+
+# Testing
+
+You have to install the test dependencies.
+
+```sh
+$ go get gopkg.in/DATA-DOG/go-sqlmock.v1
+```
+
+or you can go get this package with the -t flag
+
+```sh
+go get -t github.com/dimiro1/health
+```
+
 # Implementing custom checkers
 
 The key interface is health.Checker, you only have to implement a type that satisfies that interface.
@@ -113,7 +164,7 @@ func (d DiskSpaceChecker) Check() health.Health {
 	if err != nil {
 		health.Down()
 		health.Info = map[string]interface{}{
-			"error": err.Error(),
+			"error": err.Error(), // Why the check is Down 
 		}
         
         return health
@@ -134,18 +185,6 @@ func (d DiskSpaceChecker) Check() health.Health {
 
 	return health
 }
-```
-
-# Testing
-
-```sh
-$ go get gopkg.in/DATA-DOG/go-sqlmock.v1
-```
-
-or 
-
-```sh
-go get -t github.com/dimiro1/health
 ```
 
 # LICENSE
