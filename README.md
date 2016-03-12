@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/dimiro1/health.svg?branch=master)](https://travis-ci.org/dimiro1/health)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dimiro1/health)](https://goreportcard.com/report/github.com/dimiro1/health)
 [![GoDoc](https://godoc.org/github.com/dimiro1/health?status.svg)](https://godoc.org/github.com/dimiro1/health)
-[![Coverage Status](https://coveralls.io/repos/github/dimiro1/health/badge.svg?branch=master)](https://coveralls.io/github/dimiro1/health?branch=master)
 
 
 # Go Health Check
