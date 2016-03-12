@@ -51,16 +51,16 @@ func Test_Health_IsUp(t *testing.T) {
 	h := NewHealth()
 	h.Up()
 
-	if h.Status != Up {
-		t.Errorf("NewHealth().Status == %s, want %s", h.Status, Up)
+	if h.status != UP {
+		t.Errorf("NewHealth().status == %s, want %s", h.status, UP)
 	}
 }
 
 func Test_Health_IsDown(t *testing.T) {
 	h := NewHealth()
 
-	if h.Status != Down {
-		t.Errorf("NewHealth().Status == %s, want %s", h.Status, Down)
+	if h.status != DOWN {
+		t.Errorf("NewHealth().status == %s, want %s", h.status, DOWN)
 	}
 }
 
@@ -68,7 +68,7 @@ func Test_Health_IsOutOfService(t *testing.T) {
 	h := NewHealth()
 	h.OutOfService()
 
-	if h.Status != OutOfService {
-		t.Errorf("NewHealth().Status == %s, want %s", h.Status, OutOfService)
+	if h.status != OUT_OF_SERVICE {
+		t.Errorf("NewHealth().status == %s, want %s", h.status, OUT_OF_SERVICE)
 	}
 }

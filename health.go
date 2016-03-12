@@ -2,30 +2,40 @@ package health
 
 import "encoding/json"
 
+type healthStatus int
+
 const (
-	// Up Convenient constant value representing up state.
-	Up = "UP"
-
-	// Down Convenient constant value representing down state.
-	Down = "DOWN"
-
-	// OutOfService Convenient constant value representing out-of-service state.
-	OutOfService = "OUT_OF_SERVICE"
-
-	// Unknown Convenient constant value representing unknown state.
-	Unknown = "UNKNOWN"
+	UP healthStatus = iota
+	DOWN
+	OUT_OF_SERVICE
+	UNKNOWN
 )
+
+func (h healthStatus) String() string {
+	switch h {
+	case UP:
+		return "UP"
+	case DOWN:
+		return "DOWN"
+	case OUT_OF_SERVICE:
+		return "OUT_OF_SERVICE"
+	case UNKNOWN:
+		return "UNKNOWN"
+	}
+
+	return "NOT RECOGNIZED"
+}
 
 // Health is a health status struct
 type Health struct {
-	Status string
+	status healthStatus
 	Info   map[string]interface{}
 }
 
 // MarshalJSON is a custom JSON marshaller
 func (h Health) MarshalJSON() ([]byte, error) {
 	data := map[string]interface{}{}
-	data["status"] = h.Status
+	data["status"] = h.status.String()
 
 	for k, v := range h.Info {
 		data[k] = v
@@ -46,40 +56,40 @@ func NewHealth() Health {
 
 // IsUnknown returns true if Status is Unknown
 func (h Health) IsUnknown() bool {
-	return h.Status == Unknown
+	return h.status == UNKNOWN
 }
 
 // IsUp returns true if Status is Up
 func (h Health) IsUp() bool {
-	return h.Status == Up
+	return h.status == UP
 }
 
 // IsDown returns true if Status is Down
 func (h Health) IsDown() bool {
-	return h.Status == Down
+	return h.status == DOWN
 }
 
 // IsOutOfService returns true if Status is IsOutOfService
 func (h Health) IsOutOfService() bool {
-	return h.Status == OutOfService
+	return h.status == OUT_OF_SERVICE
 }
 
 // Down set the status to Down
 func (h *Health) Down() {
-	h.Status = Down
+	h.status = DOWN
 }
 
 // OutOfService set the status to OutOfService
 func (h *Health) OutOfService() {
-	h.Status = OutOfService
+	h.status = OUT_OF_SERVICE
 }
 
 // Unknown set the status to Unknown
 func (h *Health) Unknown() {
-	h.Status = Unknown
+	h.status = UNKNOWN
 }
 
 // Up set the status to Up
 func (h *Health) Up() {
-	h.Status = Up
+	h.status = UP
 }
