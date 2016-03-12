@@ -16,11 +16,11 @@ func NewChecker(url string) Checker {
 	return Checker{URL: url}
 }
 
-// Check makes a GET request to the given URL
+// Check makes a HEAD request to the given URL
 // If the request returns something different than StatusOK,
 // The status is set to StatusBadRequest and the URL is considered Down
 func (u Checker) Check() health.Health {
-	req, err := http.NewRequest("GET", u.URL, nil)
+	req, err := http.NewRequest("HEAD", u.URL, nil)
 
 	health := health.NewHealth()
 	health.Up()
