@@ -20,11 +20,12 @@ type Health struct {
 // MarshalJSON is a custom JSON marshaller
 func (h Health) MarshalJSON() ([]byte, error) {
 	data := map[string]interface{}{}
-	data["status"] = h.status
 
 	for k, v := range h.Info {
 		data[k] = v
 	}
+
+	data["status"] = h.status
 
 	return json.Marshal(data)
 }

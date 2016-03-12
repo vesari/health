@@ -72,3 +72,24 @@ func Test_Health_IsOutOfService(t *testing.T) {
 		t.Errorf("NewHealth().status == %s, want %s", h.status, outOfService)
 	}
 }
+
+func Test_Health_MarshalJSON(t *testing.T) {
+	h := NewHealth()
+	h.Up()
+
+	h.Info = map[string]interface{}{
+		"status": "Should not render",
+	}
+
+	json, err := h.MarshalJSON()
+
+	if err != nil {
+		t.Errorf("err != nil, wants nil")
+	}
+
+	expected := `{"status":"UP"}`
+
+	if string(json) != expected {
+		t.Errorf("h.MarshalJSON() == %s, wants %s", string(json), expected)
+	}
+}

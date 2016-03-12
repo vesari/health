@@ -188,6 +188,10 @@ func (d DiskSpaceChecker) Check() health.Health {
 }
 ```
 
+## important
+
+The **status** key in the json have priority over a **status** key added by a Checker, so if some checker add a **status** key to the json, it will not be rendered  
+
 # Implemented health check indicators
 
 | Health      | Description                            | Package                                           |
