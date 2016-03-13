@@ -57,7 +57,7 @@ func main() {
 $ curl localhost:8080/health/
 ```
 
-If everything is ok the server must return the following json.
+If everything is ok the server must respond with HTTP Status 200 OK and have following json in the body.
 
 ```json
 {
@@ -85,6 +85,37 @@ If everything is ok the server must return the following json.
         "version": "10.1.9-MariaDB"
     },
     "status": "UP"
+}
+```
+
+The server responds with HTTP Status 503 Service Unavailable if the ckeck is Down and the json response could be something like this.
+
+```json
+{
+    "Big Companies": {
+        "Google": {
+            "code": 200,
+            "status": "UP"
+        },
+        "Microsoft": {
+            "code": 200,
+            "status": "UP"
+        },
+        "Oracle": {
+            "code": 200,
+            "status": "UP"
+        },
+        "status": "UP"
+    },
+    "Go": {
+        "code": 200,
+        "status": "UP"
+    },
+    "MySQL": {
+        "status": "DOWN",
+        "error": "Error 1044: Access denied for user ''@'localhost' to database 'invalid-database'",
+    },
+    "status": "DOWN"
 }
 ```
 
@@ -188,7 +219,7 @@ func (d DiskSpaceChecker) Check() health.Health {
 }
 ```
 
-## important
+## Important
 
 The **status** key in the json have priority over a **status** key added by a Checker, so if some checker add a **status** key to the json, it will not be rendered  
 
