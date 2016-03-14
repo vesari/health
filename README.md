@@ -12,7 +12,7 @@ A Easy to use, extensible health check library
 - [Example](#example)
 - [Motivation](#motivation)
 - [Inspiration](#inspiration)
-- [Instalation](#instalation)
+- [Installation](#Installation)
 - [API](#api)
 - [Testing](#testing)
 - [Implementing custom checkers](#implementing-custom-checkers)
@@ -130,7 +130,7 @@ Also it serves as a kind of basic itegration test between the systems.
 
 I took a lot of ideas from the [spring framework](http://spring.io/).
 
-# Instalation
+# Installation
 
 This package is a go getable packake.
 
@@ -195,9 +195,7 @@ func (d DiskSpaceChecker) Check() health.Health {
 
 	if err != nil {
 		health.Down()
-		health.Info = map[string]interface{}{
-			"error": err.Error(), // Why the check is Down 
-		}
+        health.AddInfo("error", err.Error()) // Why the check is Down
         
         return health
 	}
@@ -210,10 +208,8 @@ func (d DiskSpaceChecker) Check() health.Health {
 		health.Down()
 	}
 
-	health.Info = map[string]interface{}{
-		"free":      diskFreeInBytes,
-		"threshold": d.Threshold,
-	}
+    health.AddInfo("free", diskFreeInBytes)
+    health.AddInfo("threshold", d.Threshold)
 
 	return health
 }

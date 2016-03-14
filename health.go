@@ -2,26 +2,26 @@ package health
 
 import "encoding/json"
 
-type healthStatus string
+type status string
 
 const (
-	up           healthStatus = "UP"
-	down                      = "DOWN"
-	outOfService              = "OUT OF SERVICE"
-	unknown                   = "UNKNOWN"
+	up           status = "UP"
+	down                = "DOWN"
+	outOfService        = "OUT OF SERVICE"
+	unknown             = "UNKNOWN"
 )
 
 // Health is a health status struct
 type Health struct {
-	status healthStatus
-	Info   map[string]interface{}
+	status status
+	info   map[string]interface{}
 }
 
 // MarshalJSON is a custom JSON marshaller
 func (h Health) MarshalJSON() ([]byte, error) {
 	data := map[string]interface{}{}
 
-	for k, v := range h.Info {
+	for k, v := range h.info {
 		data[k] = v
 	}
 
@@ -33,11 +33,26 @@ func (h Health) MarshalJSON() ([]byte, error) {
 // NewHealth return a new Health with status Down
 func NewHealth() Health {
 	h := Health{
-		Info: make(map[string]interface{}),
+		info: make(map[string]interface{}),
 	}
+
 	h.Down()
 
 	return h
+}
+
+// AddInfo adds a info value to the Info map
+func (h *Health) AddInfo(key string, value interface{}) {
+	if h.info == nil {
+		h.info = make(map[string]interface{})
+	}
+
+	h.info[key] = value
+}
+
+// GetInfo returns a value from the info map
+func (h Health) GetInfo(key string) interface{} {
+	return h.info[key]
 }
 
 // IsUnknown returns true if Status is Unknown

@@ -97,7 +97,7 @@ func TestCheck_up(t *testing.T) {
 		t.Errorf("health.IsDown() == %t, wants %t", health.IsDown(), false)
 	}
 
-	version := health.Info["version"]
+	version := health.GetInfo("version")
 
 	if version != dummyVersion {
 		t.Errorf("version == %s, wants %s", version, dummyVersion)
@@ -124,7 +124,7 @@ func TestCheck_down(t *testing.T) {
 		t.Errorf("health.IsUp() == %t, wants %t", health.IsUp(), false)
 	}
 
-	message := health.Info["error"]
+	message := health.GetInfo("error")
 
 	if message != expectedError {
 		t.Errorf("message == %s, wants %s", message, expectedError)
@@ -154,7 +154,7 @@ func TestCheck_down_version(t *testing.T) {
 		t.Errorf("health.IsUp() == %t, wants %t", health.IsUp(), false)
 	}
 
-	message := health.Info["error"]
+	message := health.GetInfo("error")
 
 	if message != expectedError {
 		t.Errorf("message == %s, wants %s", message, expectedError)

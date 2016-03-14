@@ -43,7 +43,7 @@ func (c CompositeChecker) Check() Health {
 		healths[item.name] = h
 	}
 
-	health.Info = healths
+	health.info = healths
 
 	return health
 }

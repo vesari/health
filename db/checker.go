@@ -42,32 +42,25 @@ func (c Checker) Check() health.Health {
 		ok      string
 	)
 
-	info := make(map[string]interface{})
-
 	health := health.NewHealth()
 	health.Down()
 
 	err := c.DB.QueryRow(c.CheckSQL).Scan(&ok)
 
 	if err != nil {
-		info["error"] = err.Error()
-		health.Info = info
-
+		health.AddInfo("error", err.Error())
 		return health
 	}
 
 	err = c.DB.QueryRow(c.VersionSQL).Scan(&version)
 
 	if err != nil {
-		info["error"] = err.Error()
-		health.Info = info
-
+		health.AddInfo("error", err.Error())
 		return health
 	}
 
-	info["version"] = version
+	health.AddInfo("version", version)
 	health.Up()
-	health.Info = info
 
 	return health
 }

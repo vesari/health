@@ -33,9 +33,7 @@ func (u Checker) Check() health.Health {
 
 	if err != nil {
 		health.Down()
-		health.Info = map[string]interface{}{
-			"code": http.StatusBadRequest,
-		}
+		health.AddInfo("code", http.StatusBadRequest)
 
 		return health
 	}
@@ -44,9 +42,7 @@ func (u Checker) Check() health.Health {
 		health.Down()
 	}
 
-	health.Info = map[string]interface{}{
-		"code": resp.StatusCode,
-	}
+	health.AddInfo("code", resp.StatusCode)
 
 	return health
 }

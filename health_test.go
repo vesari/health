@@ -77,9 +77,7 @@ func Test_Health_MarshalJSON(t *testing.T) {
 	h := NewHealth()
 	h.Up()
 
-	h.Info = map[string]interface{}{
-		"status": "Should not render",
-	}
+	h.AddInfo("status", "Should not render")
 
 	json, err := h.MarshalJSON()
 
@@ -91,5 +89,51 @@ func Test_Health_MarshalJSON(t *testing.T) {
 
 	if string(json) != expected {
 		t.Errorf("h.MarshalJSON() == %s, wants %s", string(json), expected)
+	}
+}
+
+func Test_Health_AddInfo(t *testing.T) {
+	h := NewHealth()
+
+	h.AddInfo("key", "value")
+
+	_, ok := h.info["key"]
+
+	if !ok {
+		t.Error("h.AddInfo() should add a key value to the map")
+	}
+}
+
+func Test_Health_AddInfo_null_map(t *testing.T) {
+	h := Health{}
+
+	h.AddInfo("key", "value")
+
+	_, ok := h.info["key"]
+
+	if !ok {
+		t.Error("h.AddInfo() should add a key value to the map")
+	}
+}
+
+func Test_Health_GetInfo(t *testing.T) {
+	h := NewHealth()
+
+	h.AddInfo("key", "value")
+
+	value := h.GetInfo("key")
+
+	if value != "value" {
+		t.Errorf(`h.GetInfo("key") == %s, wants %s`, value, "value")
+	}
+}
+
+func Test_Health_GetInfo_null_map(t *testing.T) {
+	h := Health{}
+
+	value := h.GetInfo("key")
+
+	if value != nil {
+		t.Errorf(`h.GetInfo("key") == %v, wants %v`, value, nil)
 	}
 }

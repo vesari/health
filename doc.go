@@ -129,7 +129,7 @@ Inspiration
 
 I took a lot of ideas from the spring framework (http://spring.io/).
 
-Instalation
+Installation
 
 This package is a go getable packake.
 
@@ -186,9 +186,7 @@ Here an example of Disk Space usage (unix only).
 
         if err != nil {
             health.Down()
-            health.Info = map[string]interface{}{
-                "error": err.Error(), // Why the check is Down
-            }
+            health.AddInfo("error", err.Error()) // Why the check is Down
 
             return health
         }
@@ -201,10 +199,8 @@ Here an example of Disk Space usage (unix only).
             health.Down()
         }
 
-        health.Info = map[string]interface{}{
-            "free":      diskFreeInBytes,
-            "threshold": d.Threshold,
-        }
+        health.AddInfo("free", diskFreeInBytes)
+        health.AddInfo("threshold", d.Threshold)
 
         return health
     }
