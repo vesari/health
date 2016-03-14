@@ -124,7 +124,7 @@ The server responds with HTTP Status 503 Service Unavailable if the ckeck is Dow
 It is very important to verify the status of your system, not only the system itself, but all its dependencies, 
 If your system is not Up you can easily know what is the cause of the problem only looking the health check.
 
-Also it serves as a kind of basic itegration test between the systems.
+Also it serves as a kind of basic integration test between the systems.
 
 # Inspiration
 
@@ -132,7 +132,7 @@ I took a lot of ideas from the [spring framework](http://spring.io/).
 
 # Installation
 
-This package is a go getable packake.
+This package is a go getable package.
 
 ```sh
 $ go get github.com/dimiro1/health
@@ -158,7 +158,7 @@ go get -t github.com/dimiro1/health
 
 # Implementing custom checkers
 
-The key interface is health.Checker, you only have to implement a type that satisfies that interface.
+The key interface is `health.Checker`, you only have to implement a type that satisfies that interface.
 
 ```go
 type Checker interface {
