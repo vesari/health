@@ -5,7 +5,7 @@
 
 # Go Health Check
 
-A Easy to use, extensible health check library
+An easy to use, extensible health check library for Go applications.
 
 **Table of Contents**
 
