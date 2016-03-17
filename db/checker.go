@@ -59,8 +59,7 @@ func (c Checker) Check() health.Health {
 		return health
 	}
 
-	health.AddInfo("version", version)
-	health.Up()
+	health.Up().AddInfo("version", version)
 
 	return health
 }

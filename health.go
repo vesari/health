@@ -42,12 +42,14 @@ func NewHealth() Health {
 }
 
 // AddInfo adds a info value to the Info map
-func (h *Health) AddInfo(key string, value interface{}) {
+func (h *Health) AddInfo(key string, value interface{}) *Health {
 	if h.info == nil {
 		h.info = make(map[string]interface{})
 	}
 
 	h.info[key] = value
+
+	return h
 }
 
 // GetInfo returns a value from the info map
@@ -76,21 +78,25 @@ func (h Health) IsOutOfService() bool {
 }
 
 // Down set the status to Down
-func (h *Health) Down() {
+func (h *Health) Down() *Health {
 	h.status = down
+	return h
 }
 
 // OutOfService set the status to OutOfService
-func (h *Health) OutOfService() {
+func (h *Health) OutOfService() *Health {
 	h.status = outOfService
+	return h
 }
 
 // Unknown set the status to Unknown
-func (h *Health) Unknown() {
+func (h *Health) Unknown() *Health {
 	h.status = unknown
+	return h
 }
 
 // Up set the status to Up
-func (h *Health) Up() {
+func (h *Health) Up() *Health {
 	h.status = up
+	return h
 }

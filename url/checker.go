@@ -32,8 +32,7 @@ func (u Checker) Check() health.Health {
 	}
 
 	if err != nil {
-		health.Down()
-		health.AddInfo("code", http.StatusBadRequest)
+		health.Down().AddInfo("code", http.StatusBadRequest)
 
 		return health
 	}

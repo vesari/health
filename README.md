@@ -194,8 +194,7 @@ func (d DiskSpaceChecker) Check() health.Health {
 	wd, err := os.Getwd()
 
 	if err != nil {
-		health.Down()
-        health.AddInfo("error", err.Error()) // Why the check is Down
+        health.Down().AddInfo("error", err.Error()) // Why the check is Down
         
         return health
 	}
@@ -208,8 +207,9 @@ func (d DiskSpaceChecker) Check() health.Health {
 		health.Down()
 	}
 
-    health.AddInfo("free", diskFreeInBytes)
-    health.AddInfo("threshold", d.Threshold)
+    health.
+        AddInfo("free", diskFreeInBytes).
+        AddInfo("threshold", d.Threshold)
 
 	return health
 }

@@ -185,8 +185,7 @@ Here an example of Disk Space usage (unix only).
         wd, err := os.Getwd()
 
         if err != nil {
-            health.Down()
-            health.AddInfo("error", err.Error()) // Why the check is Down
+            health.Down().AddInfo("error", err.Error()) // Why the check is Down
 
             return health
         }
@@ -199,8 +198,9 @@ Here an example of Disk Space usage (unix only).
             health.Down()
         }
 
-        health.AddInfo("free", diskFreeInBytes)
-        health.AddInfo("threshold", d.Threshold)
+        health.
+            AddInfo("free", diskFreeInBytes).
+            AddInfo("threshold", d.Threshold)
 
         return health
     }
