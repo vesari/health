@@ -27,6 +27,7 @@ package main
 import (
     "net/http"
     "database/sql"
+    "time"
 
     "github.com/dimiro1/health"
     "github.com/dimiro1/health/url"
@@ -37,6 +38,7 @@ import (
 func main() {
     database, _ := sql.Open("mysql", "/")
 	mysql := db.NewMySQLChecker(database)
+    timeout := 5 * time.Second
     
     companies := health.NewCompositeChecker()
     companies.AddChecker("Microsoft", url.NewChecker("https://www.microsoft.com/"))
@@ -44,7 +46,7 @@ func main() {
     companies.AddChecker("Google", url.NewChecker("https://www.google.com/"))
 
     handler := health.NewHandler()
-    handler.AddChecker("Go", url.NewChecker("https://golang.org/"))
+    handler.AddChecker("Go", url.NewCheckerWithTimeout("https://golang.org/", timeout))
     handler.AddChecker("Big Companies", companies)
     handler.AddChecker("MySQL", mysql)
 
