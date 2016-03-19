@@ -23,7 +23,7 @@ func Test_NewCheckerWithTimeout(t *testing.T) {
 	}
 
 	if c.URL != url {
-		t.Errorf("NewCheckerWithTimeout().URL == %d, wants %d", c.URL, url)
+		t.Errorf("NewCheckerWithTimeout().URL == %s, wants %s", c.URL, url)
 	}
 }
 
