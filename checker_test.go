@@ -99,3 +99,27 @@ func Test_CompositeChecker_Check_Up_combined(t *testing.T) {
 		t.Errorf("health.IsUp() == %t, wants %t", health.IsUp(), true)
 	}
 }
+
+func Test_CompositeChecker_AddInfo(t *testing.T) {
+	c := NewCompositeChecker()
+
+	c.AddInfo("key", "value")
+
+	_, ok := c.info["key"]
+
+	if !ok {
+		t.Error("c.AddInfo() should add a key value to the map")
+	}
+}
+
+func Test_CompositeChecker_AddInfo_null_map(t *testing.T) {
+	c := CompositeChecker{}
+
+	c.AddInfo("key", "value")
+
+	_, ok := c.info["key"]
+
+	if !ok {
+		t.Error("c.AddInfo() should add a key value to the map")
+	}
+}

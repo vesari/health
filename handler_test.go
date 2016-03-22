@@ -55,12 +55,13 @@ func Test_Handler_ServeHTTP_Up(t *testing.T) {
 
 	h := Handler{}
 	h.AddChecker("UpChecker", upTestChecker{})
+	h.AddInfo("custom", "info")
 
 	h.ServeHTTP(w, r)
 	jsonbytes, _ := ioutil.ReadAll(w.Body)
 	jsonstring := strings.TrimSpace(string(jsonbytes))
 
-	wants := `{"UpChecker":{"status":"UP"},"status":"UP"}`
+	wants := `{"UpChecker":{"status":"UP"},"custom":"info","status":"UP"}`
 
 	if jsonstring != wants {
 		t.Errorf("jsonstring == %s, wants %s", jsonstring, wants)

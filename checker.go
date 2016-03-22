@@ -13,11 +13,23 @@ type checkerItem struct {
 // CompositeChecker aggregate a list of Checkers
 type CompositeChecker struct {
 	checkers []checkerItem
+	info     map[string]interface{}
 }
 
 // NewCompositeChecker creates a new CompositeChecker
 func NewCompositeChecker() CompositeChecker {
 	return CompositeChecker{}
+}
+
+// AddInfo adds a info value to the Info map
+func (c *CompositeChecker) AddInfo(key string, value interface{}) *CompositeChecker {
+	if c.info == nil {
+		c.info = make(map[string]interface{})
+	}
+
+	c.info[key] = value
+
+	return c
 }
 
 // AddChecker add a Checker to the aggregator
@@ -44,6 +56,11 @@ func (c CompositeChecker) Check() Health {
 	}
 
 	health.info = healths
+
+	// Extra Info
+	for key, value := range c.info {
+		health.AddInfo(key, value)
+	}
 
 	return health
 }
