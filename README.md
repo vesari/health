@@ -123,6 +123,10 @@ The server responds with HTTP Status 503 Service Unavailable if the ckeck is Dow
         "status": "DOWN",
         "error": "Error 1044: Access denied for user ''@'localhost' to database 'invalid-database'",
     },
+    "Redis": {
+        "status": "UP",
+        "version": "3.0.5"
+    },
     "status": "DOWN"
 }
 ```
@@ -156,6 +160,7 @@ You have to install the test dependencies.
 
 ```sh
 $ go get gopkg.in/DATA-DOG/go-sqlmock.v1
+$ go get github.com/rafaeljusto/redigomock
 ```
 
 or you can go get this package with the -t flag
