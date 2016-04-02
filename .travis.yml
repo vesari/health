@@ -4,7 +4,7 @@ go:
   - 1.5
   - 1.6
 
-script: go test $(go list ./... | grep -v /vendor/)
+script: GO15VENDOREXPERIMENT=1 go test $(go list ./... | grep -v /vendor/)
 
 install:
   - go get gopkg.in/DATA-DOG/go-sqlmock.v1 
