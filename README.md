@@ -32,6 +32,7 @@ import (
     "github.com/dimiro1/health"
     "github.com/dimiro1/health/url"
     "github.com/dimiro1/health/db"
+    "github.com/dimiro1/health/redis"
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -49,6 +50,7 @@ func main() {
     handler.AddChecker("Go", url.NewCheckerWithTimeout("https://golang.org/", timeout))
     handler.AddChecker("Big Companies", companies)
     handler.AddChecker("MySQL", mysql)
+    handler.AddChecker("Redis", redis.NewChecker("tcp", ":6379"))
 
     http.Handle("/health/", handler)
     http.ListenAndServe(":8080", nil)
@@ -223,10 +225,11 @@ The **status** key in the json have priority over a **status** key added by a Ch
 
 # Implemented health check indicators
 
-| Health      | Description                            | Package                                           |
-|-------------|----------------------------------------|---------------------------------------------------|
-| url.Checker | Check the connection with some URL     | https://github.com/dimiro1/health/tree/master/url |
-| db.Checker  | Check the connection with the database | https://github.com/dimiro1/health/tree/master/db  |
+| Health         | Description                            | Package                                              |
+|----------------|----------------------------------------|------------------------------------------------------|
+| url.Checker    | Check the connection with some URL     | https://github.com/dimiro1/health/tree/master/url    |
+| db.Checker     | Check the connection with the database | https://github.com/dimiro1/health/tree/master/db     |
+| redis.Checker  | Check the connection with the redis    | https://github.com/dimiro1/health/tree/master/redis  |
 
 # LICENSE
 

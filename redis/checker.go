@@ -13,7 +13,12 @@ type Checker struct {
 }
 
 // NewChecker returns a new redis.Checker
-func NewChecker(redis Redis) Checker {
+func NewChecker(network, addr string) Checker {
+	return Checker{Redis: NewRedigo(network, addr)}
+}
+
+// NewCheckerWithRedis returns a new redis.Checker configured with a custom Redis implementation
+func NewCheckerWithRedis(redis Redis) Checker {
 	return Checker{Redis: redis}
 }
 

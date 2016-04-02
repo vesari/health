@@ -13,9 +13,17 @@ func (r upMockRedis) GetVersion() (string, error) {
 	return r.version, nil
 }
 
+func TestNewChecker(t *testing.T) {
+	c := NewChecker("tcp", ":6379")
+
+	if c.Redis == nil {
+		t.Error("c.Redis == nil, wants !nil")
+	}
+}
+
 func TestChecker_Check_up(t *testing.T) {
 	dummyVersion := "3.0.5"
-	c := NewChecker(upMockRedis{version: dummyVersion})
+	c := NewCheckerWithRedis(upMockRedis{version: dummyVersion})
 
 	health := c.Check()
 
@@ -39,7 +47,7 @@ func (r downMockRedis) GetVersion() (string, error) {
 func TestChecker_Check_down(t *testing.T) {
 	expectedError := "Could not connect"
 
-	c := NewChecker(downMockRedis{})
+	c := NewCheckerWithRedis(downMockRedis{})
 
 	health := c.Check()
 

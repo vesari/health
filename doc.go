@@ -34,6 +34,7 @@ Example
         "github.com/dimiro1/health"
         "github.com/dimiro1/health/url"
         "github.com/dimiro1/health/db"
+        "github.com/dimiro1/health/redis"
         _ "github.com/go-sql-driver/mysql"
     )
 
@@ -50,6 +51,7 @@ Example
         handler.AddChecker("Go", url.NewChecker("https://golang.org/"))
         handler.AddChecker("Big Companies", companies)
         handler.AddChecker("MySQL", mysql)
+        handler.AddChecker("Redis", redis.NewChecker("tcp", ":6379"))
 
         http.Handle("/health/", handler)
         http.ListenAndServe(":8080", nil)
