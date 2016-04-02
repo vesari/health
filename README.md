@@ -88,6 +88,10 @@ If everything is ok the server must respond with HTTP Status 200 OK and have fol
         "status": "UP",
         "version": "10.1.9-MariaDB"
     },
+    "Redis": {
+        "status": "UP",
+        "version": "3.0.5"
+    },
     "status": "UP"
 }
 ```
