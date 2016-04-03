@@ -43,19 +43,18 @@ func (c Checker) Check() health.Health {
 	)
 
 	health := health.NewHealth()
-	health.Down()
 
 	err := c.DB.QueryRow(c.CheckSQL).Scan(&ok)
 
 	if err != nil {
-		health.AddInfo("error", err.Error())
+		health.Down().AddInfo("error", err.Error())
 		return health
 	}
 
 	err = c.DB.QueryRow(c.VersionSQL).Scan(&version)
 
 	if err != nil {
-		health.AddInfo("error", err.Error())
+		health.Down().AddInfo("error", err.Error())
 		return health
 	}
 

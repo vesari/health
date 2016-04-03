@@ -32,7 +32,6 @@ func (u Checker) Check() health.Health {
 	}
 
 	health := health.NewHealth()
-	health.Up()
 
 	resp, err := client.Head(u.URL)
 
@@ -46,7 +45,9 @@ func (u Checker) Check() health.Health {
 		return health
 	}
 
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode == http.StatusOK {
+		health.Up()
+	} else {
 		health.Down()
 	}
 

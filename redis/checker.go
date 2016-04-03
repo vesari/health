@@ -25,7 +25,6 @@ func NewCheckerWithRedis(redis Redis) Checker {
 // Check obtain the version string from redis info command
 func (c Checker) Check() health.Health {
 	health := health.NewHealth()
-	health.Unknown()
 
 	version, err := c.Redis.GetVersion()
 

@@ -5,8 +5,8 @@ import "testing"
 func TestNewHealth(t *testing.T) {
 	h := NewHealth()
 
-	if !h.IsDown() {
-		t.Errorf("NewHealth().IsDown() == %t, want %t", h.IsDown(), true)
+	if !h.IsUnknown() {
+		t.Errorf("NewHealth().IsDown() == %t, want %t", h.IsUnknown(), true)
 	}
 }
 
@@ -58,6 +58,7 @@ func Test_Health_IsUp(t *testing.T) {
 
 func Test_Health_IsDown(t *testing.T) {
 	h := NewHealth()
+	h.Down()
 
 	if h.status != down {
 		t.Errorf("NewHealth().status == %s, want %s", h.status, down)

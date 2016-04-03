@@ -36,7 +36,7 @@ func NewHealth() Health {
 		info: make(map[string]interface{}),
 	}
 
-	h.Down()
+	h.Unknown()
 
 	return h
 }
