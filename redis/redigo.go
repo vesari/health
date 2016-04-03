@@ -6,12 +6,17 @@ import (
 	redigo "github.com/garyburd/redigo/redis"
 )
 
+// This interface exists to abstract the creation of new connections
+// each time the GetVersion is called. The use of this interface helps with the unit tests
 type connectionProvider interface {
 	getConnection(network, addr string) (redigo.Conn, error)
 }
 
 type defaultConnectionProvider struct{}
 
+// getConnection returns a new connection for network and addr parameters.
+// It does not make sense write code to test this function, because writing tests
+// for this function is the same as testing the redigo/redis itself.
 func (c defaultConnectionProvider) getConnection(network, addr string) (redigo.Conn, error) {
 	return redigo.Dial(network, addr)
 }

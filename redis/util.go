@@ -2,6 +2,9 @@ package redis
 
 import "strings"
 
+// parseInfo parse the return of the redis INFO command
+// and returns a maps containing each key associates with its value
+// bot key and value are strings to make things simple.
 func parseInfo(in string) map[string]string {
 	info := map[string]string{}
 	lines := strings.Split(in, "\r\n")
