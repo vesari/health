@@ -184,7 +184,6 @@ Here an example of Disk Space usage (unix only).
 
     func (d DiskSpaceChecker) Check() health.Health {
         health := health.NewHealth()
-        health.Up() // Default is Down
 
         var stat syscall.Statfs_t
 
@@ -192,7 +191,6 @@ Here an example of Disk Space usage (unix only).
 
         if err != nil {
             health.Down().AddInfo("error", err.Error()) // Why the check is Down
-
             return health
         }
 
@@ -202,6 +200,8 @@ Here an example of Disk Space usage (unix only).
 
         if diskFreeInBytes < d.Threshold {
             health.Down()
+        } else {
+            health.Up()
         }
 
         health.

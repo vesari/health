@@ -200,7 +200,6 @@ func NewDiskSpaceChecker(dir string, threshold uint64) DiskSpaceChecker {
 
 func (d DiskSpaceChecker) Check() health.Health {
 	health := health.NewHealth()
-	health.Up() // Default is Down
 
 	var stat syscall.Statfs_t
 
@@ -208,7 +207,6 @@ func (d DiskSpaceChecker) Check() health.Health {
 
 	if err != nil {
         health.Down().AddInfo("error", err.Error()) // Why the check is Down
-        
         return health
 	}
 
@@ -218,7 +216,9 @@ func (d DiskSpaceChecker) Check() health.Health {
 
 	if diskFreeInBytes < d.Threshold {
 		health.Down()
-	}
+	} else {
+        health.Up()
+    }
 
     health.
         AddInfo("free", diskFreeInBytes).
