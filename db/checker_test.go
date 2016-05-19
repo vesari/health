@@ -160,3 +160,21 @@ func TestCheck_down_version(t *testing.T) {
 		t.Errorf("message == %s, wants %s", message, expectedError)
 	}
 }
+
+func TestCheck_down_nil_db(t *testing.T) {
+	checker := NewChecker("SELECT 1", "SELECT VERSION()", nil)
+
+	expectedError := "Empty resource"
+
+	health := checker.Check()
+
+	if health.IsUp() {
+		t.Errorf("health.IsUp() == %t, wants %t", health.IsUp(), false)
+	}
+
+	message := health.GetInfo("error")
+
+	if message != expectedError {
+		t.Errorf("message == %s, wants %s", message, expectedError)
+	}
+}

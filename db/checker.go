@@ -44,6 +44,11 @@ func (c Checker) Check() health.Health {
 
 	health := health.NewHealth()
 
+	if c.DB == nil {
+		health.Down().AddInfo("error", "Empty resource")
+		return health
+	}
+
 	err := c.DB.QueryRow(c.CheckSQL).Scan(&ok)
 
 	if err != nil {
