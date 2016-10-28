@@ -179,7 +179,7 @@ type Checker interface {
 }
 ```
 
-Here an example of Disk Space usage (unix only).
+Here is an example of Disk Space usage (unix only).
 
 ```go
 package main
@@ -230,7 +230,7 @@ func (d DiskSpaceChecker) Check() health.Health {
 
 ## Important
 
-The **status** key in the json have priority over a **status** key added by a Checker, so if some checker add a **status** key to the json, it will not be rendered  
+The **status** key in the json has priority over a **status** key added by a Checker, so if some checker adds a **status** key to the json, it will not be rendered  
 
 # Implemented health check indicators
 
