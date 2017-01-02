@@ -5,6 +5,14 @@ type Checker interface {
 	Check() Health
 }
 
+// CheckerFunc is an adapter to allow the use of
+// ordinary go functions as Checkers.
+type CheckerFunc func() Health
+
+func (f CheckerFunc) Check() Health {
+	return f()
+}
+
 type checkerItem struct {
 	name    string
 	checker Checker

@@ -123,3 +123,18 @@ func Test_CompositeChecker_AddInfo_null_map(t *testing.T) {
 		t.Error("c.AddInfo() should add a key value to the map")
 	}
 }
+
+func TestCheckerFunc_Check(t *testing.T) {
+	f := CheckerFunc(func() Health {
+		h := NewHealth()
+		h.Up()
+
+		return h
+	})
+
+	h := f.Check()
+
+	if !h.IsUp() {
+		t.Errorf("h.IsUp() == %t, wants %t", h.IsUp(), true)
+	}
+}
