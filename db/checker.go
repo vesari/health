@@ -42,28 +42,32 @@ func (c Checker) Check() health.Health {
 		ok      string
 	)
 
-	health := health.NewHealth()
+	h := health.NewHealth()
 
 	if c.DB == nil {
-		health.Down().AddInfo("error", "Empty resource")
-		return health
+		h.Down().AddInfo("error", "Empty resource")
+		return h
 	}
 
 	err := c.DB.QueryRow(c.CheckSQL).Scan(&ok)
 
 	if err != nil {
-		health.Down().AddInfo("error", err.Error())
-		return health
+		h.Down().AddInfo("error", err.Error())
+		return h
 	}
 
-	err = c.DB.QueryRow(c.VersionSQL).Scan(&version)
+	// We are gonna make it VersionSQL optional, as I cannot change the API,
+	// we decided to ignore if the VersionSQL is empty.
+	if c.VersionSQL != "" {
+		err = c.DB.QueryRow(c.VersionSQL).Scan(&version)
 
-	if err != nil {
-		health.Down().AddInfo("error", err.Error())
-		return health
+		if err != nil {
+			h.Down().AddInfo("error", err.Error())
+			return h
+		}
+
+		h.Up().AddInfo("version", version)
 	}
 
-	health.Up().AddInfo("version", version)
-
-	return health
+	return h
 }

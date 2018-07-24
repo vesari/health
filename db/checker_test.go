@@ -104,6 +104,34 @@ func TestCheck_up(t *testing.T) {
 	}
 }
 
+func TestCheck_up_not_set_version(t *testing.T) {
+	db, mock, err := sqlmock.New()
+
+	if err != nil {
+		t.Errorf("sqlmock.New().error != nil, wants nil")
+	}
+
+	defer db.Close()
+
+	checker := NewChecker("SELECT 1", "", db)
+
+	rows := sqlmock.NewRows([]string{"1"}).AddRow("1")
+	mock.ExpectQuery(checker.CheckSQL).WillReturnRows(rows)
+
+	health := checker.Check()
+
+	if health.IsDown() {
+		t.Errorf("health.IsDown() == %t, wants %t", health.IsDown(), false)
+	}
+
+	// must not be present in the response
+	version := health.GetInfo("version")
+
+	if version != nil {
+		t.Errorf("version == %s, wants %v", version, nil)
+	}
+}
+
 func TestCheck_down(t *testing.T) {
 	db, mock, err := sqlmock.New()
 
