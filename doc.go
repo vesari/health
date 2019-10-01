@@ -31,10 +31,10 @@ Example
         "net/http"
         "database/sql"
 
-        "github.com/dimiro1/health"
-        "github.com/dimiro1/health/url"
-        "github.com/dimiro1/health/db"
-        "github.com/dimiro1/health/redis"
+        "github.com/vesari/health"
+        "github.com/vesari/health/url"
+        "github.com/vesari/health/db"
+        "github.com/vesari/health/redis"
         _ "github.com/go-sql-driver/mysql"
     )
 
@@ -139,7 +139,7 @@ Installation
 
 This package is a go getable packake.
 
-    $ go get github.com/dimiro1/health
+    $ go get github.com/vesari/health
 
 API
 
@@ -154,7 +154,7 @@ You have to install the test dependencies.
 
 or you can go get this package with the -t flag
 
-    $ go get -t github.com/dimiro1/health
+    $ go get -t github.com/vesari/health
 
 Implementing custom checkers
 

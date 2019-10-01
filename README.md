@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/dimiro1/health.svg?branch=master)](https://travis-ci.org/dimiro1/health)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dimiro1/health)](https://goreportcard.com/report/github.com/dimiro1/health)
-[![GoDoc](https://godoc.org/github.com/dimiro1/health?status.svg)](https://godoc.org/github.com/dimiro1/health)
+[![Build Status](https://travis-ci.org/vesari/health.svg?branch=master)](https://travis-ci.org/vesari/health)
+[![Go Report Card](https://goreportcard.com/badge/github.com/vesari/health)](https://goreportcard.com/report/github.com/vesari/health)
+[![GoDoc](https://godoc.org/github.com/vesari/health?status.svg)](https://godoc.org/github.com/vesari/health)
 
-Try browsing [the code on Sourcegraph](https://sourcegraph.com/github.com/dimiro1/health)!
+Try browsing [the code on Sourcegraph](https://sourcegraph.com/github.com/vesari/health)!
 
 # Go Health Check
 
@@ -30,10 +30,10 @@ import (
     "database/sql"
     "time"
 
-    "github.com/dimiro1/health"
-    "github.com/dimiro1/health/url"
-    "github.com/dimiro1/health/db"
-    "github.com/dimiro1/health/redis"
+    "github.com/vesari/health"
+    "github.com/vesari/health/url"
+    "github.com/vesari/health/db"
+    "github.com/vesari/health/redis"
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -148,7 +148,7 @@ I took a lot of ideas from the [spring framework](http://spring.io/).
 This package is a go getable package.
 
 ```sh
-$ go get github.com/dimiro1/health
+$ go get github.com/vesari/health
 ```
 
 # API
@@ -167,7 +167,7 @@ $ go get github.com/rafaeljusto/redigomock
 or you can go get this package with the -t flag
 
 ```sh
-go get -t github.com/dimiro1/health
+go get -t github.com/vesari/health
 ```
 
 # Implementing custom checkers
@@ -237,9 +237,9 @@ The **status** key in the json has priority over a **status** key added by a Che
 
 | Health         | Description                            | Package                                              |
 |----------------|----------------------------------------|------------------------------------------------------|
-| url.Checker    | Check the connection with some URL     | https://github.com/dimiro1/health/tree/master/url    |
-| db.Checker     | Check the connection with the database | https://github.com/dimiro1/health/tree/master/db     |
-| redis.Checker  | Check the connection with the redis    | https://github.com/dimiro1/health/tree/master/redis  |
+| url.Checker    | Check the connection with some URL     | https://github.com/vesari/health/tree/master/url    |
+| db.Checker     | Check the connection with the database | https://github.com/vesari/health/tree/master/db     |
+| redis.Checker  | Check the connection with the redis    | https://github.com/vesari/health/tree/master/redis  |
 
 # LICENSE
 
